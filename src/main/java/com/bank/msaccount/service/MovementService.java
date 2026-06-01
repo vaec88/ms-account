@@ -3,6 +3,8 @@ package com.bank.msaccount.service;
 import com.bank.msaccount.dto.MovementDetailResponseDto;
 import com.bank.msaccount.dto.MovementRequestDto;
 import com.bank.msaccount.dto.MovementResponseDto;
+import com.bank.msaccount.dto.MovementSimpleRequestDto;
+import com.bank.msaccount.dto.MovementSimpleResponseDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +20,14 @@ public interface MovementService {
      * @return a Mono containing the saved movement {@link MovementResponseDto}
      */
     Mono<MovementResponseDto> save(MovementRequestDto movementRequest);
+
+    /**
+     * Save a simple movement
+     *
+     * @param movementRequest the movement request {@link MovementSimpleRequestDto}
+     * @return a Mono containing the saved movement {@link MovementSimpleResponseDto}
+     */
+    Mono<MovementSimpleResponseDto> saveSimple(MovementSimpleRequestDto movementRequest);
 
     /**
      * Finds all movements

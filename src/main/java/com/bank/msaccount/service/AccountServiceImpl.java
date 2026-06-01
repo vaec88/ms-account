@@ -4,6 +4,7 @@ import com.bank.msaccount.client.CustomerClient;
 import com.bank.msaccount.dto.AccountRequestDto;
 import com.bank.msaccount.dto.AccountResponseDto;
 import com.bank.msaccount.dto.CustomerResponseDto;
+import com.bank.msaccount.dto.UpdateAccountRequestDto;
 import com.bank.msaccount.exception.AccountNotFoundException;
 import com.bank.msaccount.exception.CustomerInactiveException;
 import com.bank.msaccount.model.Account;
@@ -100,7 +101,22 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Mono<AccountResponseDto> update(Long id, AccountRequestDto accountRequest) {
+    @Transactional(readOnly = true)
+    public Mono<AccountResponseDto> findByNumber(String number) {
+        return accountRepository.findByNumber(number)
+                .switchIfEmpty(Mono.error(new AccountNotFoundException(number)))
+                .map(accountSaved -> AccountResponseDto.builder()
+                        .id(accountSaved.getId())
+                        .number(accountSaved.getNumber())
+                        .type(accountSaved.getType())
+                        .balance(accountSaved.getBalance())
+                        .status(accountSaved.getStatus())
+                        .customerId(accountSaved.getCustomerId())
+                        .build());
+    }
+
+    @Override
+    public Mono<AccountResponseDto> update(Long id, UpdateAccountRequestDto accountRequest) {
         log.info("Start update account");
         return accountRepository.findById(id)
                 .switchIfEmpty(Mono.error(new AccountNotFoundException(id)))

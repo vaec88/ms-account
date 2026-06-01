@@ -2,6 +2,7 @@ package com.bank.msaccount.service;
 
 import com.bank.msaccount.dto.AccountRequestDto;
 import com.bank.msaccount.dto.AccountResponseDto;
+import com.bank.msaccount.dto.UpdateAccountRequestDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -34,13 +35,21 @@ public interface AccountService {
     Mono<AccountResponseDto> findById(Long id);
 
     /**
+     * Finds an account by number
+     *
+     * @param number the number of the account to retrieve
+     * @return a Mono containing the retrieved account {@link AccountResponseDto}
+     */
+    Mono<AccountResponseDto> findByNumber(String number);
+
+    /**
      * Updates a account by ID
      *
      * @param id             the ID of the account
-     * @param accountRequest the account request {@link AccountRequestDto}
+     * @param accountRequest the account request {@link UpdateAccountRequestDto}
      * @return a Mono containing the updated account {@link AccountResponseDto}
      */
-    Mono<AccountResponseDto> update(Long id, AccountRequestDto accountRequest);
+    Mono<AccountResponseDto> update(Long id, UpdateAccountRequestDto accountRequest);
 
     /**
      * Deletes an account by ID

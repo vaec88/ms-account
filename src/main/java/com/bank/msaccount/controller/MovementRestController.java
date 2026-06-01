@@ -3,6 +3,8 @@ package com.bank.msaccount.controller;
 import com.bank.msaccount.dto.MovementDetailResponseDto;
 import com.bank.msaccount.dto.MovementRequestDto;
 import com.bank.msaccount.dto.MovementResponseDto;
+import com.bank.msaccount.dto.MovementSimpleRequestDto;
+import com.bank.msaccount.dto.MovementSimpleResponseDto;
 import com.bank.msaccount.service.MovementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,11 @@ public class MovementRestController {
     @PostMapping
     public Mono<MovementResponseDto> save(@Valid @RequestBody MovementRequestDto movementRequest) {
         return movementService.save(movementRequest);
+    }
+
+    @PostMapping("/simple")
+    public Mono<MovementSimpleResponseDto> saveSimple(@Valid @RequestBody MovementSimpleRequestDto movementRequest) {
+        return movementService.saveSimple(movementRequest);
     }
 
     /**

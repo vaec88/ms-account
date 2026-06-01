@@ -2,6 +2,7 @@ package com.bank.msaccount.controller;
 
 import com.bank.msaccount.dto.AccountRequestDto;
 import com.bank.msaccount.dto.AccountResponseDto;
+import com.bank.msaccount.dto.UpdateAccountRequestDto;
 import com.bank.msaccount.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,18 @@ public class AccountRestController {
     }
 
     /**
+     * Retrieves an account by number
+     *
+     * @param number the number of the account to retrieve
+     * @return a Mono containing the retrieved account {@link AccountResponseDto}
+     */
+    @GetMapping("/number/{number}")
+    public Mono<ResponseEntity<AccountResponseDto>> findByNumber(@PathVariable String number) {
+        return accountService.findByNumber(number)
+                .map(ResponseEntity::ok);
+    }
+
+    /**
      * Updates a account by ID
      *
      * @param id             the ID of the account
@@ -76,7 +89,7 @@ public class AccountRestController {
     @PutMapping("/{id}")
     public Mono<ResponseEntity<AccountResponseDto>> update(
             @PathVariable Long id,
-            @Valid @RequestBody AccountRequestDto accountRequest) {
+            @Valid @RequestBody UpdateAccountRequestDto accountRequest) {
         return accountService.update(id, accountRequest)
                 .map(ResponseEntity::ok);
     }
