@@ -1,0 +1,9 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: ms-account
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/bank
+    username: postgres
+    password: Password01
